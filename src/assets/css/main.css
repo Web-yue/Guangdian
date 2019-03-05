@@ -5,16 +5,17 @@
 
 html,
 body,
-#app,
-.wrapper {
+#app,.wrapper{
     width: 100%;
     height: 100%;
     overflow: hidden;
-  background-color: #0c172b;
+ }
+.wrapper{
+  overflow-y: scroll;
+  min-width: 940px;
 }
-
 body {
-    font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
+  font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
 }
 
 a {
@@ -171,4 +172,30 @@ a {
 
 .v-note-wrapper .v-note-panel {
     min-height: 500px;
+}
+
+/* 通用css */
+.leftOne,.leftTwo,.leftThree,.leftFour{
+  width: 100%;
+  margin-bottom: 10px;
+  background:url('../../assets/img/leftBg.png');
+  box-shadow:0 0 12px 0 rgba(9,78,154,0.65);
+  background-size: 100% 100%
+}
+.leftTitle,.rightTitle{
+  font-size:16px;
+  height: 34px;
+  padding: 9px 0 0 10px;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:16px;
+  text-shadow:0 0 4px rgba(42,113,235,1);
+
+}
+.cvsBox {
+  width: 100%;
+  height: max-content;
+  padding: 0 10px;
+  box-sizing: border-box;
 }

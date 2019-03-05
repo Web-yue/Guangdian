@@ -1,48 +1,71 @@
 <template>
   <div class="header">
-    <div class="header-right" ref="time">
 
-    </div>
+    <div class="header-right" ref="time" v-html="realTime">
+     </div>
   </div>
 </template>
 
 <script>
-  // $(function(){
-  //   setInterval("getTime();",1000); //每隔一秒运行一次
-  // })
-  // //取得系统当前时间
-  // function getTime(){
-  //   var myDate = new Date();
-  //   var date = myDate.toLocaleDateString();
-  //   var hours = myDate.getHours();
-  //   var minutes = myDate.getMinutes();
-  //   var seconds = myDate.getSeconds();
-  //   $("#showDate").html(date+" "+hours+":"+minutes+":"+seconds); //将值赋给div
-  // }
-   export default {
+
+  export default {
     name: 'Header',
-     data(){
+    data () {
       return {
+        realTime: '2019-1-1 00:00'
       }
-     },
-     beforeMount(){
-      this.$ref.time.bindTexture('12')
-     }
+    },
+    props:['msgFather'],
+
+    methods: {
+      // 获取当前时间函数a
+      dealWithTime: (timeStamp) => {
+       const  fmtTime=(a) => {return a < 10 ? '0' +  a: a}
+        let year = new Date(timeStamp).getFullYear()
+        let month = new Date(timeStamp).getMonth()
+        let date = new Date(timeStamp).getDate()
+        let hh = new Date(timeStamp).getHours()
+        let mm = new Date(timeStamp).getMinutes()
+        let ss = new Date(timeStamp).getSeconds()
+        return year + '-' +fmtTime(month) + '-' + fmtTime(date)  + ' ' + fmtTime(hh) + ':' + fmtTime(mm) + ':' + fmtTime(ss)
+      },
+
+    },
+
+    mounted () {
+      // 页面加载完后显示当前时间
+      this.realTime = this.dealWithTime(new Date())
+      // 定时刷新时间
+      let _this = this
+      // 定时器
+      this.timer = setInterval(function () {
+        _this.realTime = _this.dealWithTime(new Date()) // 修改数据date
+      }, 1000)
+    },
+    destroyed () {
+      if (this.timer) {
+        clearInterval(this.timer)
+      }
+    }
+
   }
 </script>
 
 <style scoped>
-  .header{
+  .header {
     height: 100px;
-    /*width: 100%;*/
-    background: url('../../assets/img/header.png')no-repeat center top;
-    /*-webkit-background-size: ;*/
-    background-size: auto 100%;
+     background: url('../../assets/img/header.png') no-repeat center top;
+     background-size: auto 100%;
     position: relative;
   }
-  .header-right{
+
+  .header-right {
     float: right;
-    color:white;
-    padding:20px 50px 0 0;
+     padding: 20px 50px 0 0;
+    font-size:16px;
+    font-family:BigYoungBoldGB20;
+    color:rgba(246,249,255,1);
+    line-height:16px;
+    text-shadow:0 2px 0 rgba(16,17,18,0.5), 0 0 5px rgba(37,108,215,0.77);
   }
 </style>
