@@ -9,7 +9,12 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: resolve => require(['../components/common/Home.vue'], resolve)
+      component: resolve => require(['../components/common/Home.vue'], resolve),
+    },
+    {
+      path: '/SlideLeft',
+      component: resolve => require(['../components/common/SlideLeft.vue'], resolve),
+
     },
     {
       path: '/404',
