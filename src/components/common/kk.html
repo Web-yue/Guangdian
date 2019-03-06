@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+  <title>模型变换</title>
+  <meta name="description" content="使用 Object3D 类型的 position 和 rotateZ 等方法可对三维对象进行模型变换，本例模拟了雷达扫描的实现。">
+  <style>
+    html,
+    body,
+    #container {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+<div id="container"></div>
+<!--<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>-->
+<script>
+  window.forceWebGL = true;
+</script>
+ <script src="https://webapi.amap.com/maps?v=1.4.13&key=608d75903d29ad471362f8c58c550daf&plugin=Map3D"></script>
+<script>
+  var map = new AMap.Map('container', {
+    viewMode: '3D',
+    buildingAnimation: false,
+    showIndoorMap: false,
+    center: [116.470323, 39.992598],
+    pitch: 30,
+    zoom: 17
+  });
+
+  var object3Dlayer = new AMap.Object3DLayer();
+  map.add(object3Dlayer);
+
+  var radar;
+  var buildRadar = function () {
+    radar = new AMap.Object3D.Mesh();
+    radar.transparent = true;
+    radar.backOrFront = 'front';
+
+    var geometry = radar.geometry;
+    var radius = 200; // 米
+    radius = radius / map.getResolution(map.getCenter(), 20);
+    var unit = 1;
+    var range = 900;
+    var count = range / unit;
+
+    for (var i = 0; i < count; i += 1) {
+      var angle1 = i * unit * Math.PI / 180;
+      var angle2 = (i + 1) * unit * Math.PI / 180;
+
+      var p1x = Math.cos(angle1) * radius;
+      var p1y = Math.sin(angle1) * radius;
+      var p2x = Math.cos(angle2) * radius;
+      var p2y = Math.sin(angle2) * radius;
+
+      geometry.vertices.push(0, 0, 0);
+      geometry.vertices.push(p1x, p1y, 0);
+      geometry.vertices.push(p2x, p2y, 0);
+
+      var opacityStart = getOpacity(i / count);
+      var opacityEnd = getOpacity((i + 1) / count);
+
+      geometry.vertexColors.push(0, 1, 0.2, opacityStart);
+      geometry.vertexColors.push(0, 1, 0.2, opacityStart);
+      geometry.vertexColors.push(0, 1, 0.2, opacityEnd);
+    }
+
+    radar.position(map.getCenter());
+
+    object3Dlayer.add(radar);
+  };
+
+  function getOpacity(scale) {
+    return 1 - Math.pow(scale, 0.3);
+  }
+
+  function scan() {
+    radar.rotateZ(-2);
+    AMap.Util.requestAnimFrame(scan);
+  }
+
+  buildRadar();
+  scan();
+
+</script>
+</body>
+</html>

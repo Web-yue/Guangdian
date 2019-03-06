@@ -29,7 +29,11 @@
 
 <style scoped>
   .slideLeft {
-   float: left;
+   /*float: left;*/
+    position: absolute;
+    left: 0;
+    top: 100px;
+    z-index: 1;
     width: 454px;
     height: fit-content;
     padding-left: 14px;

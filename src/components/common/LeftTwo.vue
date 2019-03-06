@@ -2,7 +2,7 @@
   <div class="leftTwo">
     <div class="leftTitle">各频段发射机数量</div>
     <div class="cvsBox">
-      <canvas id="cvsTwo"></canvas>
+      <div id="cvsTwo"></div>
     </div>
 
   </div>
@@ -84,7 +84,12 @@
           ]
         }
 
-        myChart.setOption(option)
+        myChart.setOption(option);
+        // setTimeout(function (){
+        //   window.onresize = function () {
+        //     myChart.resize();
+        //   }
+        // },200)
       }
     }
   }

@@ -57,6 +57,7 @@
      background: url('../../assets/img/header.png') no-repeat center top;
      background-size: auto 100%;
     position: relative;
+    z-index: 1;
   }
 
   .header-right {

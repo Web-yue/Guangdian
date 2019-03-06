@@ -124,7 +124,7 @@
           },
           grid: {
             bottom: 150,
-            left: 100,
+            left: 0,
             right: '10%'
           },
           legend: {
@@ -230,8 +230,16 @@
           ]
         };
 
-        myChart.setOption(option)
+        myChart.setOption(option);
+
+        // setTimeout(function (){
+        //   window.onresize = function () {
+        //     myChart.resize();
+        //   }
+        // },200)
       })()
+
+
     },
 
     methods: {
@@ -239,9 +247,9 @@
         let myChart = echarts.init(document.getElementById('cvsRtTwo'))
 
         let model = {
-          yCates: ['Saturday', 'Friday', 'Thursday',
-            'Wednesday', 'Tuesday', 'Monday',
-            'Sunday'],
+          yCates: ['周一', '周二', '周三',
+            '周四', '周五', '周六',
+            '周末'],
           xCates: ['1', '2', '3', '4', '5'],
           data: [
             // [yCateIndex, xCateIndex, value]
@@ -266,8 +274,11 @@
           animation: false,
           grid: {
             height: '50%',
+            width:'80%',
+            right:'5%',
+            left:'10%',
             y: '5%',
-            x:'20%'
+            // x:'10%'
           },
           xAxis: {
             type: 'category',
@@ -303,7 +314,11 @@
           }]
         }
         myChart.setOption(option)
-
+        // setTimeout(function (){
+        //   window.onresize = function () {
+        //     myChart.resize();
+        //   }
+        // },200)
 
       }
     }
@@ -312,7 +327,11 @@
 
 <style scoped>
   .slideRight {
-    float: right;
+    /*float: right;*/
+    position: absolute;
+    right: 0;
+    top: 100px;
+    z-index: 1;
     width: 440px;
     height: fit-content;
     padding-right: 10px;
@@ -355,7 +374,7 @@
 
 
   #cvsRtTwo{
-    width: 400px;
+    width: 100%;
     height: 201px;
   }
   #cvsRtThree{

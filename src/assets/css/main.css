@@ -9,10 +9,12 @@ body,
     width: 100%;
     height: 100%;
     overflow: hidden;
+  background-color: #000;
  }
 .wrapper{
   overflow-y: scroll;
   min-width: 940px;
+  position: relative;
 }
 body {
   font-family: 'PingFang SC', "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
@@ -199,3 +201,26 @@ a {
   padding: 0 10px;
   box-sizing: border-box;
 }
+
+
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+
+
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+
+@media  screen and (min-width:1680px) and (max-width: 1903px) {
+  .slideLeft, .slideRight{
+    width: 380px!important;
+  }
+}
+@media screen and (min-width:1366px) and (max-width: 1679px) {
+  .slideLeft, .slideRight{
+    width: 320px!important;
+  }
+}
+@media screen and (min-width:1024px) and (max-width: 1365px) {
+  .slideLeft, .slideRight{
+    width: 280px!important;
+  }
+}
+

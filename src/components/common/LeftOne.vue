@@ -1,8 +1,8 @@
 <template>
   <div class="leftOne">
     <div class="leftTitle">本年度正常运行情况</div>
-    <div>
-      <canvas id="cvsOne"></canvas>
+    <div class="cvsBox">
+      <div id="cvsOne" ref="Echart"></div>
     </div>
 
     <!--<p v-html="inputName"></p>-->
@@ -12,9 +12,9 @@
 
 <script>
 
-//  var echarts = require("echarts");
-//  require('echarts/chart/line');
-//  require('echarts/chart/bar');
+  //  var echarts = require("echarts");
+  //  require('echarts/chart/line');
+  //  require('echarts/chart/bar');
   export default {
     name: 'LeftOne',
     props: {
@@ -25,266 +25,242 @@
         default: '123456',
       }
     },
+
+
     // props:['inputName','msgFather']
     mounted () {
       this.draw();
-      (function () {
+
+    },
+    watch: {
+      screenWidth (val) {
+        // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+        if (!this.timer) {
+          // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+          this.screenWidth = val
+          this.timer = true
+          let that = this
+          setTimeout(function () {
+            // 打印screenWidth变化的值
+            console.log(that.screenWidth)
+            that.timer = false
+          }, 400)
+        }
+      }
+    },
+    methods: {
+
+      draw: () => {
         let myChart = echarts.init(document.getElementById('cvsOne'))
 
-        myChart.configParameters = {
-          pie1Process: {
-            min: 0,
-            max: 100
-          },
-          pie2Process: {
-            min: 0,
-            max: 100
-          },
-          pie3Process: {
-            min: 0,
-            max: 100
-          },
-        };
-
-        myChart.config = {
-          message: 'dat.gui',
-          pie1Process: 25,
-          pie2Process: 50,
-          pie3Process: 75,
-          pie1Color: '#3dd4de',
-          pie2Color: '#b697cd',
-          pie3Color: '#a6f08f',
-          onChange: function() {
-            var tempOption = {
-              title: {
-                text: parseInt(myChart.config.pie2Process) + '%',
-                textStyle: {
-                  color: myChart.config.pie2Color,
-                }
-              },
-              series: [{
-                data: [{
-                  value: parseInt(myChart.config.pie1Process),
-                  itemStyle: {
-                    normal: {
-                      color: myChart.config.pie1Color,
-                      shadowColor: myChart.config.pie1Color,
-                    }
-                  },
-                  label: {
-                    normal: {
-                      formatter: '{d}%',
-                      position: 'center',
-                      show: true,
-                      textStyle: {
-                        fontSize: '35',
-                        fontWeight: 'normal',
-                        color: myChart.config.pie1Color
-                      }
-                    }
-                  },
-                }, {
-                  value: 100 - parseInt(myChart.config.pie1Process),
-                  itemStyle: placeHolderStyle,
-
-                }]
-              }, {
-                data: [{
-                  value: parseInt(myChart.config.pie2Process),
-                  itemStyle: {
-                    normal: {
-                      color: myChart.config.pie2Color,
-                      shadowColor: myChart.config.pie2Color,
-                    }
-                  }
-                }, {
-                  value: 100 - parseInt(myChart.config.pie2Process),
-                  itemStyle: placeHolderStyle,
-                }]
-              }, {
-                data: [{
-                  value: parseInt(myChart.config.pie3Process),
-                  label: {
-                    normal: {
-                      formatter: '{d}%',
-                      position: 'center',
-                      show: true,
-                      textStyle: {
-                        fontSize: '35',
-                        fontWeight: 'normal',
-                        color: myChart.config.pie3Color
-                      }
-                    }
-                  },
-                  itemStyle: {
-                    normal: {
-                      color: myChart.config.pie3Color,
-                      shadowColor: myChart.config.pie3Color,
-                    }
-                  }
-                }, {
-                  value: 100 - parseInt(myChart.config.pie3Process),
-
-                  itemStyle: placeHolderStyle,
-                }]
-              }]
-            }
-            myChart.setOption(tempOption);
-          }
-        };
-
-
-// 这里借鉴'5643我'和'小明的小可'两位大神的圆环图格式演示一下效果
-        var dataStyle = {
-          normal: {
-            label: {
-              show: false
-            },
-            labelLine: {
-              show: false
-            },
-            shadowBlur: 40,
-            shadowColor: 'rgba(40, 40, 40, 0.5)',
-          }
-        };
-
-        var placeHolderStyle = {
-          normal: {
-            color: 'rgba(44,59,70,1)', // 未完成的圆环的颜色
-            label: {
-              show: false
-            },
-            labelLine: {
-              show: false
-            }
-          },
-          emphasis: {
-            color: 'rgba(44,59,70,1)' // 未完成的圆环的颜色
-          }
-        };
-
         let option = {
-          title: {
-            text: '50%',
-            x: 'center',
-            y: 'center',
-            textStyle: {
-              fontWeight: 'normal',
-              color: '#b697cd',
-              fontSize: 35
-            }
-          },
-          tooltip: {
-            show: false,
-          },
-          toolbox: {
-            show: false,
-          },
-          // color : ['#3dd4de','#b697cd','#a6f08f'],
-          backgroundColor: 'rgba(0,0,0,0.8)',
+          backgroundColor: 'transparent',
+          // title:{
+          //   text:'各类型注销数量占比'
+          // },
+          tooltip: {},
+
           series: [{
-            name: 'Pie1',
+            name: '申请注销',
             type: 'pie',
-            clockWise: false,
-            radius: [80, 85],
-            itemStyle: dataStyle,
-            hoverAnimation: false,
-            center: ['25%', '50%'],
+            radius: ['40%', '45%'],
+            center: ['80%', '30%'],
+            color: '#00EE76',
+            label: {
+              normal: {
+                position: 'center'
+              }
+            },
             data: [{
-              value: 25,
+              value: 69,
+              name: '申请注销数',
+
               label: {
                 normal: {
-                  formatter: '{d}%',
-                  position: 'center',
-                  show: true,
+                  formatter: '{d} %',
                   textStyle: {
-                    fontSize: '35',
-                    fontWeight: 'normal',
-                    color: '#3dd4de'
+                    fontSize: 18
+                  }
+                }
+              },
+              tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>计算公式:占比率=({b}/注销总数)*100%<br/> 申请注销数 : {c}'
+              }
+            }, {
+              value: 133,
+              name: '其他类型数',
+              label: {
+                normal: {
+                  formatter: '\n申请注销占比',
+                  textStyle: {
+                    color: '#555',
+                    fontSize: 13
                   }
                 }
               },
               itemStyle: {
                 normal: {
-                  color: '#3dd4de',
-                  shadowColor: '#3dd4de',
-                  shadowBlur: 10
+                  color: '#aaa'
+                },
+                emphasis: {
+                  color: '#aaa'
                 }
-              }
-            }, {
-              value: 75,
-              name: 'invisible',
-              itemStyle: placeHolderStyle,
+              },
             }]
           }, {
-            name: 'Pie2',
+            name: '吊销注销',
             type: 'pie',
-            clockWise: false,
-            radius: [80, 85],
-            itemStyle: dataStyle,
-            hoverAnimation: false,
-            center: ['50%', '50%'],
-            data: [{
-              value: 50,
-              itemStyle: {
-                normal: {
-                  color: '#b697cd',
-                  shadowColor: '#b697cd',
-                  shadowBlur: 10
-                }
+            radius: ['40%', '45%'],
+            center: ['20%', '30%'],
+            color: '#FF4500',
+            label: {
+              normal: {
+                position: 'center'
               }
-            }, {
-              value: 50,
-              name: 'invisible',
-              itemStyle: placeHolderStyle,
-            }]
-          }, {
-            name: 'Pie3',
-            type: 'pie',
-            clockWise: false,
-            radius: [80, 85],
-            itemStyle: dataStyle,
-            hoverAnimation: false,
-            center: ['75%', '50%'],
+            },
             data: [{
-              value: 75,
+              value: 38,
+              name: '吊销注销数',
+
               label: {
                 normal: {
-                  formatter: '{d}%',
-                  position: 'center',
-                  show: true,
+                  formatter: '{d} %',
                   textStyle: {
-                    fontSize: '35',
-                    fontWeight: 'normal',
-                    color: '#a6f08f'
+                    fontSize: 18
+                  }
+                }
+              },
+              tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>计算公式:占比率=({b}/注销总数)*100%<br/> 吊销注销数 : {c}'
+              }
+            }, {
+              value: 164,
+              name: '其他类型数',
+              label: {
+                normal: {
+                  formatter: '\n吊销注销占比',
+                  textStyle: {
+                    color: '#555',
+                    fontSize: 13
                   }
                 }
               },
               itemStyle: {
                 normal: {
-                  color: '#a6f08f',
-                  shadowColor: '#a6f08f',
-                  shadowBlur: 10
+                  color: '#aaa'
+                },
+                emphasis: {
+                  color: '#aaa'
                 }
+              },
+            }]
+          }, {
+            name: '吊销注销',
+            type: 'pie',
+            radius: ['40%', '45%'],
+            center: ['60%', '30%'],
+            color: '#FF4500',
+            label: {
+              normal: {
+                position: 'center'
+              }
+            },
+            data: [{
+              value: 38,
+              name: '吊销注销数',
+
+              label: {
+                normal: {
+                  formatter: '{d} %',
+                  textStyle: {
+                    fontSize: 18
+                  }
+                }
+              },
+              tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>计算公式:占比率=({b}/注销总数)*100%<br/> 吊销注销数 : {c}'
               }
             }, {
-              value: 25,
-              name: 'invisible',
-              itemStyle: placeHolderStyle,
+              value: 164,
+              name: '其他类型数',
+              label: {
+                normal: {
+                  formatter: '\n吊销注销占比',
+                  textStyle: {
+                    color: '#555',
+                    fontSize: 13
+                  }
+                }
+              },
+              itemStyle: {
+                normal: {
+                  color: '#aaa'
+                },
+                emphasis: {
+                  color: '#aaa'
+                }
+              },
             }]
-          }, ]
+          }, {
+            name: '到期注销',
+            type: 'pie',
+            radius: ['40%', '45%'],
+            center: ['40%', '30%'],
+            color: '#473C8B',
+            label: {
+              normal: {
+                position: 'center'
+              }
+            },
+            data: [{
+              value: 95,
+              name: '到期注销数',
+
+              label: {
+                normal: {
+                  formatter: '{d} %',
+                  textStyle: {
+                    fontSize: 18
+                  }
+                }
+              },
+              tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>计算公式:占比率=({b}/注销总数)*100%<br/> 到期注销数 : {c}'
+              }
+            }, {
+              value: 107,
+              name: '其他类型数',
+              label: {
+                normal: {
+                  formatter: '\n到期注销占比',
+                  textStyle: {
+                    color: '#555',
+                    fontSize: 13
+                  }
+                }
+              },
+              itemStyle: {
+                normal: {
+                  color: '#aaa'
+                },
+                emphasis: {
+                  color: '#aaa'
+                }
+              },
+            }]
+          }]
         }
 
-        myChart.setOption(option);
-      })();
-      (function () {
-
-      })()
-    },
-
-    methods: {
-      draw: () => {
-
+        myChart.setOption(option)
+        // setTimeout(function () {
+        //   window.onresize = function () {
+        //     myChart.resize()
+        //   }
+        // }, 200)
       }
     }
   }
@@ -296,5 +272,9 @@
     /*background-color: rebeccapurple;*/
   }
 
+  #cvsOne {
+    width: 100%;
+    height: 160px;
+  }
 
 </style>
