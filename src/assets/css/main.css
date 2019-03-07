@@ -13,7 +13,8 @@ body,
  }
 .wrapper{
   overflow-y: scroll;
-  min-width: 940px;
+  /*min-width: 940px;*/
+  min-width: 1130px;
   position: relative;
 }
 body {

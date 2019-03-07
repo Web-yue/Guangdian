@@ -4,6 +4,7 @@
     <v-slideLeft></v-slideLeft>
     <v-slideRight></v-slideRight>
     <v-g-map></v-g-map>
+    <!--<v-SlideCenter></v-SlideCenter>-->
   </div>
 </template>
 
@@ -12,6 +13,7 @@
   import vSlideLeft from './SlideLeft'
   import vSlideRight from './SlideRight'
   import vGMap from './GMap'
+  import vSlideCenter from './SlideCenter'
   export default {
     name: 'Home',
     components:{

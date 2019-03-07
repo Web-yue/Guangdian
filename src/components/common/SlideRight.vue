@@ -21,7 +21,7 @@
       <div class="rightThree">
         <div class="rightTitle">在线用户数</div>
 
-        <ul >
+        <ul>
           <li>
             <img src="../../assets/img/car.png" height="142" width="100%" alt="">
             <p>北高峰</p>
@@ -30,8 +30,8 @@
             <img src="../../assets/img/car.png" height="142" width="100%" alt="">
             <p>北高峰</p>
           </li>
-         </ul>
-        <ul >
+        </ul>
+        <ul>
           <li>
             <img src="../../assets/img/car.png" height="142" width="100%" alt="">
             <p>北高峰</p>
@@ -43,69 +43,176 @@
         </ul>
       </div>
     </template>
+
+    <!--<template>-->
+      <!--<div class="RightFltBox">-->
+        <!--<el-form ref="form" :model="form" style="">-->
+          <!--&lt;!&ndash;<el-form-item label="名字">&ndash;&gt;-->
+          <!--<el-select @change="selectGet" v-model="form.region" placeholder="请选择名字">-->
+            <!--<el-option-->
+              <!--v-for="item in selectList"-->
+              <!--:key="item.id"-->
+              <!--:label="item.name"-->
+              <!--:value="item.id"-->
+            <!--&gt;</el-option>-->
+          <!--</el-select>-->
+          <!--&lt;!&ndash;</el-form-item>&ndash;&gt;-->
+        <!--</el-form>-->
+        <!--<template >-->
+          <!--<div id="eltmp">-->
+            <!--<el-table :header-cell-style="tableHeaderColor"-->
+                      <!--:data="tableData" border style="width: 100%">-->
+              <!--<el-table-column prop="date" label="日期" width="auto" height="32" align="center" >-->
+              <!--</el-table-column>-->
+              <!--<el-table-column prop="name" label="姓名" width="auto" height="32" align="center">-->
+              <!--</el-table-column>-->
+              <!--<el-table-column prop="address" label="地址" width="auto" height="32" align="center">-->
+              <!--</el-table-column>-->
+            <!--</el-table>-->
+          <!--</div>-->
+
+        <!--</template>-->
+
+        <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;<ul class="littleUl">&ndash;&gt;-->
+        <!--&lt;!&ndash;<li></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<li v-for="(item,index) in lstArr" @click="check($event,item)"&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;:style="index==0?{borderTop:'1px solid #51A0F8'}:{borderTop:'none'}">&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;{{item.content}}&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</template>-->
   </div>
 </template>
 <style>
-  ul{
+  .rightThree > ul {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     list-style: none;
-    padding:11px 16px;
+    padding: 11px 16px;
     /*height: 142px;*/
     box-sizing: border-box;
   }
-  ul>li{
+
+  .rightThree > ul > li {
     width: 49%;
     height: 180px;
-    background:url('../../assets/img/leftBg.png')no-repeat;
-    box-shadow:0 0 12px 0 rgba(9,78,154,0.65);
+    background: url('../../assets/img/leftBg.png') no-repeat;
+    box-shadow: 0 0 12px 0 rgba(9, 78, 154, 0.65);
     background-size: 100% 100%
   }
-  ul>li>p{
+
+  .rightThree > ul > li > p {
     text-align: center;
-    color:white
+    color: white
   }
-  ul:nth-of-type(2){
+
+  .rightThree > ul:nth-of-type(2) {
     padding-top: 0;
     /*margin-top: 16px;*/
+  }
+
+  .RightFltBox {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    list-style: none;
+    width: 250px;
+    height: 228px;
+    position: absolute;
+    border: 1px solid rgba(248,81,81,0.6);
+    /*background-color: rgba(248,81,81,0.3);*/
+    z-index: 1;
+    left: -280px;
+    top: 30px;
+  }
+
+  .RightFltBox > ul {
+    list-style: none;
+  }
+
+  .el-input__inner {
+    position: relative;
+    box-shadow: 0 0 10px red inset;
+    border: none;
+    color: white;
+    background-color: transparent !important;
+  }
+
+  #eltmp{
+    padding: 0
   }
 </style>
 <script>
   export default {
     name: 'SlideRight',
+
+    data () {
+      return {
+        selectList: [
+          {id: 0, name: '张三'},
+          {id: 1, name: '里三'},
+          {id: 2, name: '李四'}
+        ],
+        form: {
+          region: ''
+        },
+        bgcolor:'black',
+        tableData: [{
+          date: '台电',
+          name: '频段',
+          address: '告警类型'
+        }, {
+          date: '台电',
+          name: '频段',
+          address: '告警类型'
+        },
+          {
+            date: '台电',
+            name: '频段',
+            address: '告警类型'
+          }
+
+        ]
+      }
+    },
     mounted () {
       this.draw();
       (function () {
         let myChart = echarts.init(document.getElementById('cvsRtOne_a'))
 
-       let data = [{
-          "name": "1",
-          "value": 10
+        let data = [{
+          'name': '1',
+          'value': 10
         }, {
-          "name": "2",
-          "value": 10
+          'name': '2',
+          'value': 10
         }, {
-          "name": "3",
-          "value": 10
+          'name': '3',
+          'value': 10
         }, {
-          "name": "4",
-          "value": 10
+          'name': '4',
+          'value': 10
         }, {
-          "name": "5",
-          "value": 10
+          'name': '5',
+          'value': 10
         }, {
-          "name": "6",
-          "value": 20
+          'name': '6',
+          'value': 20
         }, {
-          "name": "7",
-          "value": 30
-        }, ]
+          'name': '7',
+          'value': 30
+        },]
 
-       let option = {
+        let option = {
 
-          color: ['#A0CE3A', '#31C5C0', '#1E9BD1', '#0F347B', '#585247', '#7F6AAD', '#009D85', "rgba(250,250,250,0.3)"],
+          color: ['#A0CE3A', '#31C5C0', '#1E9BD1', '#0F347B', '#585247', '#7F6AAD', '#009D85', 'rgba(250,250,250,0.3)'],
           backgroundColor: '#000',
           title: {
             text: '总数',
@@ -129,8 +236,8 @@
           },
           legend: {
             orient: 'vertical',
-            top: "middle",
-            right: "5%",
+            top: 'middle',
+            right: '5%',
             textStyle: {
               color: '#f2f2f2',
               fontSize: 25,
@@ -148,7 +255,7 @@
               label: {
                 normal: {
                   show: true,
-                  formatter: "{c}%",
+                  formatter: '{c}%',
                   textStyle: {
                     fontSize: 30,
 
@@ -169,7 +276,7 @@
                   show: true
                 }
               },
-              name: "民警训练总量",
+              name: '民警训练总量',
               data: data,
 
             },
@@ -201,7 +308,7 @@
               data: [{
                 value: 1,
                 itemStyle: {
-                  color: "rgba(250,250,250,0.3)",
+                  color: 'rgba(250,250,250,0.3)',
                 },
               }],
             }, {
@@ -228,9 +335,9 @@
               }]
             },
           ]
-        };
+        }
 
-        myChart.setOption(option);
+        myChart.setOption(option)
 
         // setTimeout(function (){
         //   window.onresize = function () {
@@ -239,10 +346,22 @@
         // },200)
       })()
 
-
     },
 
     methods: {
+      selectGet (vId) {
+        let obj = {}
+        obj = this.selectList.find((item) => {//这里的selectList就是上面遍历的数据源
+          return item.id === vId//筛选出匹配数据
+        })
+        console.log(obj.name)//我这边的name就是对应label的
+        console.log(obj.id)
+      },
+      tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+        if (rowIndex === 0) {
+          return 'background-color: #0C2859;color: #fff;font-weight: 500;'
+        }
+      },
       draw: () => {
         let myChart = echarts.init(document.getElementById('cvsRtTwo'))
 
@@ -274,9 +393,9 @@
           animation: false,
           grid: {
             height: '50%',
-            width:'80%',
-            right:'5%',
-            left:'10%',
+            width: '80%',
+            right: '5%',
+            left: '10%',
             y: '5%',
             // x:'10%'
           },
@@ -321,11 +440,17 @@
         // },200)
 
       }
+
     }
   }
 </script>
 
 <style scoped>
+  .RightFltBox .el-form {
+    width: 100%;
+    background-color: transparent;
+  }
+
   .slideRight {
     /*float: right;*/
     position: absolute;
@@ -335,7 +460,7 @@
     width: 440px;
     height: fit-content;
     padding-right: 10px;
-    overflow: hidden;
+    /*overflow: hidden;*/
   }
 
   .slideRight:after {
@@ -345,7 +470,7 @@
     clear: both;
   }
 
-  .slideRight > div {
+  .slideRight > div:not(.RightFltBox) {
     width: 100%;
     margin-bottom: 10px;
     background: url('../../assets/img/leftBg.png');
@@ -372,40 +497,43 @@
     margin-bottom: 0;
   }
 
-
-  #cvsRtTwo{
+  #cvsRtTwo {
     width: 100%;
     height: 201px;
   }
-  #cvsRtThree{
+
+  #cvsRtThree {
     height: 370px;
   }
 
-  #cvsRtOne_a{
+  #cvsRtOne_a {
     width: 100%;
     height: 191px;
   }
 
-  .el-row{
+  .el-row {
     padding: 10px;
   }
-  .el-col{
+
+  .el-col {
     height: 100px;
     /*border: 1px solid #daff60;*/
-   }
+  }
+
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
   }
-  .hover-row{
+
+  .hover-row {
     background-color: #212e3e !important;
   }
 
-  .el-table__body tr:hover{
+  .el-table__body tr:hover {
     background-color: #8ad3f0 !important;
   }
 
-  .el-table tr.current-row>td{
+  .el-table tr.current-row > td {
     background-color: #38d3f0 !important;
   }
 
